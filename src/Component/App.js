@@ -32,7 +32,7 @@ function App() {
       console.log(recordBlob)
       axios.post('http://localhost:8080/api/v1/stt/', formData
       ).then((res)=>{
-        console.log('Success' + res.data)
+        console.log(res)
       }).catch((error)=>{
         console.log('Error!' + error)
       })
@@ -43,13 +43,11 @@ function App() {
     <div>
       <ReactMic
         record={record}
-        className="sound-wave"
         visualSetting="frequencyBars"
         onStop={onStop}
         onData={onData}
         strokeColor="#000000"
         backgroundColor="#333333"
-        mimeType="audio/wav"
       />
       <br/>
       <div>

@@ -24,10 +24,10 @@ public class SttService {
             // Builds the sync recognize request
             RecognitionConfig config =
                     RecognitionConfig.newBuilder()
-                            .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
+                            .setEncoding(RecognitionConfig.AudioEncoding.WEBM_OPUS)
                             .setSampleRateHertz(48000)
                             .setAudioChannelCount(2)
-                            .setLanguageCode("ko-KR")
+                            .setLanguageCode("en-US")
                             .build();
 
             RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(ByteString.copyFrom(audioByte)).build();
@@ -44,7 +44,7 @@ public class SttService {
                 message = alternative.getTranscript();
             }
         } catch (Exception e){
-            message = "error!" + e.getMessage();
+            message = "error! Message:" + e.getMessage();
         }
 
         return message;
