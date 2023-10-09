@@ -27,7 +27,7 @@ public class SttService {
                             .setEncoding(RecognitionConfig.AudioEncoding.WEBM_OPUS)
                             .setSampleRateHertz(48000)
                             .setAudioChannelCount(2)
-                            .setLanguageCode("en-US")
+                            .setLanguageCode("ko-KR")
                             .build();
 
             RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(ByteString.copyFrom(audioByte)).build();
@@ -44,7 +44,7 @@ public class SttService {
                 message = alternative.getTranscript();
             }
         } catch (Exception e){
-            message = "error! Message:" + e.getMessage();
+            message = "error! ResponseMessage:" + e.getMessage();
         }
 
         return message;

@@ -6,6 +6,7 @@ function App() {
 
   const [recordBlob, setRecordBlob] = useState(null);
   const [record, setRecord] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null);
 
   const formData = new FormData();
 
@@ -26,15 +27,21 @@ function App() {
     setRecord(false);
   }
 
-  const sendHandler = () =>{
+  const sendHandler = async () =>{
     if(recordBlob){
       formData.append('audio', recordBlob.blob, 'audio.wave');
       console.log(recordBlob)
-      axios.post('http://localhost:8080/api/v1/stt/', formData
-      ).then((res)=>{
-        console.log(res)
+      await axios.post('http://localhost:8080/api/v1/stt/', formData, {
+        responseType: 'arraybuffer'
+      }).then((res)=>{
+        console.log(res);
+        const audio = res.data;
+        const blob = new Blob([audio])
+        const url = URL.createObjectURL(blob);
+        setAudioUrl(url);
       }).catch((error)=>{
         console.log('Error!' + error)
+        alert("다시 한번 이야기 해주세요.")
       })
     }
   }
@@ -64,6 +71,11 @@ function App() {
         </audio>
       )}
       <button onClick={sendHandler}>전송</button>
+      {audioUrl && (
+        <audio controls>
+          <source src={audioUrl} type="audio/mp3" />
+        </audio>
+      )}
     </div>
   );
 }
